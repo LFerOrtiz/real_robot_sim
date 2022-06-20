@@ -1,0 +1,10 @@
+<launch>
+    <include file="$(find real_robot_sim)/launch/wall_follower_services.launch">
+    </include>
+
+    <include file="$(find real_robot_sim)/launch/wall_follower.launch">
+    </include>
+
+    <node pkg="real_robot_sim" type="record_odom_server.py" name="record_odom_action_server" output="screen">
+    </node>
+</launch>

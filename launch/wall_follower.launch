@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="real_robot_sim" type="wall_following.py" name="wall_follower" output="screen">
+    </node>
+</launch>
