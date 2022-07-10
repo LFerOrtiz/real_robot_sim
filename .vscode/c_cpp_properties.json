@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ubuntu/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/actions_quiz/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/ardron_action_move/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/logger_example_pkg/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/move_robot/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/my_package/include/**",
+        "/home/ubuntu/catkin_ws/src/turtlebot3/realsense_gazebo_plugin/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/services_quiz/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/topics_quiz/include/**",
+        "/home/ubuntu/catkin_ws/src/turtlebot3/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/ubuntu/catkin_ws/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/home/ubuntu/catkin_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/home/ubuntu/catkin_ws/src/python_five_days/unit_6_services/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

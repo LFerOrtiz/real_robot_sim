@@ -1,4 +1,6 @@
 <launch>
-    <node pkg="real_robot_sim" type="wall_following.py" name="wall_follower" output="screen">
+    <arg name="robotType" default="sim" />
+
+    <node pkg="real_robot_sim" type="wall_following.py" name="wall_follower" output="screen" args="$(arg robotType)">
     </node>
 </launch>

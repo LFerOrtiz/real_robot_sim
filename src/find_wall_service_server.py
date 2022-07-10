@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 import rospy
 import enum
+import sys
 from real_robot_sim.srv import FindWall, FindWallResponse
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
@@ -10,7 +11,7 @@ import time
 class FindWallService:
     def __init__(self, mode):
         rospy.loginfo("Init node find_wall")
-        self._mode = mode
+        self._mode = mode.value
         self.laser = {
             "front_laser": 0.0,
             "right_laser": 0.0,
@@ -23,6 +24,7 @@ class FindWallService:
 
         self.move = Twist()
         rospy.on_shutdown(self.__clean_shutdown)
+
         self.rate = rospy.Rate(10)
         rospy.spin()
 
@@ -39,7 +41,6 @@ class FindWallService:
             self.laser["left_laser"] = min(laser_range[4 * 130:4 * 150])
 
     def __find_callback(self, request):
-        rospy.loginfo("Finding the wall!!")
         flags = {
             "find_wall" : False,
             "parallel_wall" : False,
@@ -73,6 +74,7 @@ class FindWallService:
                     
             # Move to stay closer to the wall
             if flags["find_wall"] and not flags["close_wall"]:
+                rospy.loginfo("Finding the wall!!")
                 rospy.loginfo("Front!!")
                 self.move.linear.x = 0.05
                 self.move.angular.z = 0.0
@@ -107,14 +109,23 @@ class FindWallService:
 
 
 if __name__ == "__main__":
-    rospy.init_node("find_wall_service", anonymous=True)
     # Select the type of robot, simulation or real
     class simType (enum.Enum):
         Sim = 0
         Real = 1
 
+    rospy.init_node("find_wall_service", anonymous=True)
+
+    # Get the command line arguments from the launch file
+    robot_type = sys.argv[1]
+
     try:
-        find_wall = FindWallService(mode=simType.Sim)
+        # Select type of robot use, simulation or real
+        if robot_type == "sim":
+            find_wall = FindWallService(mode=simType.Sim)
+        else:
+            find_wall = FindWallService(mode=simType.Real)
+
     except rospy.ROSInterruptException:
         rospy.signal_shutdown("")
 

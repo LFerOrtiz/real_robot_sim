@@ -3,6 +3,8 @@ import rospy
 import time
 import enum
 import actionlib
+import sys
+
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from real_robot_sim.srv import FindWall, FindWallRequest
@@ -20,7 +22,7 @@ class RobotControl:
             "left_laser": 0.0
         }
         self._rate = rospy.Rate(10)
-        self._mode = mode
+        self._mode = mode.value
         self.current_distance = 0.0
         rospy.on_shutdown(self._clean_shutdown)
 
@@ -106,22 +108,32 @@ class RobotControl:
 
 
 if __name__ == "__main__":
-    # Create a node 
-    rospy.init_node("real_robot_control", anonymous=True, log_level=rospy.INFO)
-
+    # Select the type of robot, simulation or real
     class simType (enum.Enum):
         Sim = 0
         Real = 1
 
+    # Create a node 
+    rospy.init_node("robot_control", anonymous=True, log_level=rospy.INFO)
+
+    # Get the command line arguments from the launch file
+    robot_type = sys.argv[1]
+
     rospy.wait_for_service("/find_wall")
     wall_client = rospy.ServiceProxy('/find_wall', FindWall)
 
-    # Wait for 5 seconds to call the service
-    time.sleep(5)
+    # Wait for 3 seconds to call the service
+    time.sleep(3)
     wall_client_objet = FindWallRequest()
-
+    
     result = wall_client(wall_client_objet)
-    robot_control = RobotControl(mode=simType.Sim)
+    rospy.loginfo(result)
+
+    # Select type of robot use, simulation or real
+    if robot_type == "sim":
+        robot_control = RobotControl(mode=simType.Sim)
+    else:
+        robot_control = RobotControl(mode=simType.Real)
 
     try:
         if result:

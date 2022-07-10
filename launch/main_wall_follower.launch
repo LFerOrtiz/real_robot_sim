@@ -1,8 +1,14 @@
 <launch>
+    <!-- Select the type of robot to use, Real o Simulation robot -->
+    <arg name="type" default="sim" />
+
+    <!-- Inlcude the other launch files -->
     <include file="$(find real_robot_sim)/launch/wall_follower_services.launch">
+        <arg name="robotType" value="$(arg type)" />
     </include>
 
     <include file="$(find real_robot_sim)/launch/wall_follower.launch">
+        <arg name="robotType" value="$(arg type)" />
     </include>
 
     <node pkg="real_robot_sim" type="record_odom_server.py" name="record_odom_action_server" output="screen">

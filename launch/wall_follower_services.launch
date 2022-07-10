@@ -1,7 +1,9 @@
 <launch>
-    <node pkg="real_robot_sim" type="find_wall_service_server.py" name="wall_follower_service" output="screen">
+    <arg name="robotType" default="sim" />
+
+    <node pkg="real_robot_sim" type="find_wall_service_server.py" name="wall_follower_service" output="screen" args="$(arg robotType)">
     </node>
 
-    <!-- <node pkg="real_robot_sim" type="find_wall_client_server.py" name="wall_follower_client" output="screen">
-    </node> -->
+    <!--<node pkg="real_robot_sim" type="find_wall_client_server.py" name="wall_follower_client" output="screen">
+    </node>-->
 </launch>
